@@ -1,18 +1,8 @@
 pipeline {
-  agent {
-    dockerfile {
-      filename 'Dockerfile'
-    }
-
-  }
+  agent any
   stages {
     stage('build image') {
-      agent {
-        dockerfile {
-          filename 'Dockerfile'
-        }
-
-      }
+      agent any
       steps {
         sh 'docker build -t test .'
       }
