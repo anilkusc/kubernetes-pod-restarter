@@ -10,7 +10,7 @@ pipeline {
 
     stage('push container') {
       steps {
-        sh 'docker push anilkuscu95/restart'
+        sh 'docker push anilkuscu95/restarter'
       }
     }
 
