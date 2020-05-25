@@ -4,7 +4,7 @@ pipeline {
     stage('build container') {
       agent any
       steps {
-        sh 'docker build -t anilkuscu95/test .'
+        sh 'docker build -t anilkuscu95/restarter .'
       }
     }
 
