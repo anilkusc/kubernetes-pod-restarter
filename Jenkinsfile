@@ -1,18 +1,36 @@
 pipeline {
-  agent any
-  stages {
-    stage('build container') {
-      agent any
-      steps {
-        sh 'docker build -t anilkuscu95/restarter .'
-      }
-    }
-
-    stage('push container') {
-      steps {
-        sh 'docker push anilkuscu95/restarter'
-      }
-    }
-
-  }
+environment {
+registry = "anilkuscu95/restarter"
+registryCredential = 'dockerhub'
+dockerImage = ''
+}
+agent any
+stages {
+stage('Cloning our Git') {
+steps {
+git 'https://github.com/anilkusc/kubernetes-pod-restarter.git'
+}
+}
+stage('Building our image') {
+steps{
+script {
+dockerImage = docker.build registry + ":$BUILD_NUMBER"
+}
+}
+}
+stage('Deploy our image') {
+steps{
+script {
+docker.withRegistry( '', registryCredential ) {
+dockerImage.push()
+}
+}
+}
+}
+stage('Cleaning up') {
+steps{
+sh "docker rmi $registry:$BUILD_NUMBER"
+}
+}
+}
 }
