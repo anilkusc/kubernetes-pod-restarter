@@ -46,7 +46,7 @@ spec:
           containers:
           - name: restarter
             image: debian:stretch
-            command: ["/scripts/entrypoint.sh"]
+            command: ["/app/entrypoint.sh"]
             args: ["nginx","default"]
             imagePullPolicy: IfNotPresent
             volumeMounts:
@@ -56,6 +56,7 @@ spec:
           volumes:
             - name: script
               configMap:
+                defaultMode: 477
                 name: entrypoint            
 ---
 kind: ConfigMap
